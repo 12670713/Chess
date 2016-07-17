@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Chess</string>
+    <string name="title_game_rule">Rule</string>
+    <string name="title_game_play">Play</string>
+    <string name="title_move_rule">Basic moves of the pieces</string>
+    <string name="title_move_king">Basic moves of King</string>
+    <string name="title_move_queen">Moves of the Queen</string>
+    <string name="title_move_bishop">Moves of a Bishop</string>
+    <string name="title_move_rook">Moves of a Rook</string>
+    <string name="title_move_knight">Moves of a Knight</string>
+    <string name="title_move_pawn">Moves of a Pawn</string>
+
+    <string name="content_move_king">The king moves one square horizontally, vertically and diagonally. A special move of King with Rook is called castling - refer special moves.</string>
+   <string name="content_move_queen">The queen moves any number of squares horizontally, vertically and diagonally. It might be the strongest pieces in chess.</string>
+    <string name="content_move_bishop">Bishop can move any number of squares in any diagonal direction. They can only move to another square which has same colour with the colour of their initial place before the move. </string>
+    <string name="content_move_rook">Rook moves any number of squares in horizontal or vertical direction. It also moves in castling.</string>
+    <string name="content_move_knight">Knight moves in an "L" pattern (one square horizontally/vertically and a square diagonally). It is the only piece which can jump over another piece, it does not get blocked by other pieces.</string>
+    <string name="content_move_pawn">Pawn in the first move can move one or two squares forward. If the pawn had a first movement, the pawn only can move one square forward. Pawns cannot move backwards. A pawn only able to capture the piece of the opponent in their diagonal direction at front but they cannot move if there is no piece or the piece is its own force.</string>
+
+</resources>
