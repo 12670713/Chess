@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Chess</string>
+    <string name="app_name">체스</string>
     <string name="title_game_rule">게임 룰 설명</string>
     <string name="title_game_play">게임 하기</string>
     <string name="title_move_rule">기본 행마법</string>
