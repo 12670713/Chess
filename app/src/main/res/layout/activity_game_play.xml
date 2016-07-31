@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.chess.GamePlayActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="a" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="b" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="c" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="d" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="e" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="f" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="g" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="h" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="8" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="7" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="6" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="5" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="4" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="3" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="2" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back">
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn1"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn2"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn3"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn4"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn5"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn6"
+                    android:layout_marginLeft="125dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn7"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:id="@+id/imgWhitePawn8"
+                    android:layout_marginLeft="175dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="onClickPawn"
+                    android:src="@drawable/pawn" />
+
+                <ImageView
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/rook" />
+
+                <ImageView
+                    android:layout_marginLeft="175dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/rook" />
+
+                <ImageView
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/rook" />
+
+                <ImageView
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/knight" />
+
+                <ImageView
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/knight" />
+
+                <ImageView
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/bishop" />
+
+                <ImageView
+                    android:layout_marginLeft="125dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/bishop" />
+
+                <ImageView
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/queen" />
+
+                <ImageView
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="175dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/king" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="8" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="7" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="6" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="5" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="4" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="3" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="2" />
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="a" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="b" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="c" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="d" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="e" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="f" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="g" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="h" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
