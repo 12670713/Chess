@@ -73,6 +73,23 @@ public class GamePlayActivity extends AppCompatActivity {
             }
         }
         mResPosition[1][0] = R.id.imgBlackPawn1;
+        mResPosition[1][1] = R.id.imgBlackPawn2;
+        mResPosition[1][2] = R.id.imgBlackPawn3;
+        mResPosition[1][3] = R.id.imgBlackPawn4;
+        mResPosition[1][4] = R.id.imgBlackPawn5;
+        mResPosition[1][5] = R.id.imgBlackPawn6;
+        mResPosition[1][6] = R.id.imgBlackPawn7;
+        mResPosition[1][7] = R.id.imgBlackPawn8;
+
+        mResPosition[0][0] = R.id.imgBlackRook1;
+        mResPosition[0][1] = R.id.imgBlackKnight1;
+        mResPosition[0][2] = R.id.imgBlackBishop1;
+        mResPosition[0][3] = R.id.imgBlackKing;
+        mResPosition[0][4] = R.id.imgBlackQueen;
+        mResPosition[0][5] = R.id.imgBlackBishop2;
+        mResPosition[0][6] = R.id.imgBlackKnight2;
+        mResPosition[0][7] = R.id.imgBlackRook2;
+
 
         mResPosition[6][0] = R.id.imgWhitePawn1;
         mResPosition[6][1] = R.id.imgWhitePawn2;
