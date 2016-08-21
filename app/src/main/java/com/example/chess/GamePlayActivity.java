@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class GamePlayActivity extends AppCompatActivity {
 
     RelativeLayout mRelativeLayout;
     int[][] mResPosition;
     boolean mOnClick = false;
+
+    ArrayList<TextView> mListTextX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,25 +25,42 @@ public class GamePlayActivity extends AppCompatActivity {
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.layout);
         initPosition();
+
+        mListTextX = new ArrayList<>();
     }
 
     public void onClickMove(View view) {
         String tag = (String) view.getTag();
 
+        if (mOnClick) {
+            for (int i = 0; i < mListTextX.size(); i++) {
+                TextView temp = mListTextX.get(i);
+                mRelativeLayout.removeView(temp);
+            }
+            mListTextX.clear();
+        }
+
         switch (tag) {
-            case "pawn":
-                movePawn(view);
+            case "whitepawn":
+                movePawn(view, true);
                 break;
-            case "rook" :
+            case "blackpawn":
+                movePawn(view, false);
+                break;
+            case "rook":
                 moveRook(view);
                 break;
-            case "knight" :
+            case "knight":
+                moveKnight(view);
                 break;
-            case "bishop" :
+            case "bishop":
+                moveBishop(view);
                 break;
-            case "queen" :
+            case "queen":
+                moveQueen(view);
                 break;
-            case "king" :
+            case "king":
+                moveKing(view);
                 break;
         }
     }
@@ -51,6 +72,8 @@ public class GamePlayActivity extends AppCompatActivity {
                 mResPosition[i][j] = 0;
             }
         }
+        mResPosition[1][0] = R.id.imgBlackPawn1;
+
         mResPosition[6][0] = R.id.imgWhitePawn1;
         mResPosition[6][1] = R.id.imgWhitePawn2;
         mResPosition[6][2] = R.id.imgWhitePawn3;
@@ -70,41 +93,39 @@ public class GamePlayActivity extends AppCompatActivity {
         mResPosition[7][7] = R.id.imgWhiteRook2;
     }
 
-    private void movePawn(View view) {
-        if (mOnClick) {
-            return;
-        }
-
+    private void movePawn(View view, boolean white) {
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
-                    if (top > 0 && mResPosition[top-1][left] == 0) {
-                        showX(view, top, left, top-1, left);
-                        mOnClick = true;
-                        return;
+                    if (white) {
+                        if (top > 0 && mResPosition[top - 1][left] == 0) {
+                            showX(view, top, left, top - 1, left);
+                            mOnClick = true;
+                        }
+                    } else {
+                        if (top < mResPosition.length - 1 && mResPosition[top + 1][left] == 0) {
+                            showX(view, top, left, top + 1, left);
+                            mOnClick = true;
+                        }
                     }
+                    return;
                 }
             }
         }
     }
 
     private void moveRook(View view) {
-        if (mOnClick) {
-            return;
-        }
-
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     // 위로 이동
-                    for (int i = top - 1; i > 0; i--) {
+                    for (int i = top - 1; i >= 0; i--) {
                         if (mResPosition[i][left] != 0) {
                             break;
                         }
                         showX(view, top, left, i, left);
                         mOnClick = true;
                     }
-
                     // 아래로 이동
                     for (int i = top + 1; i < mResPosition.length; i++) {
                         if (mResPosition[i][left] != 0) {
@@ -113,9 +134,16 @@ public class GamePlayActivity extends AppCompatActivity {
                         showX(view, top, left, i, left);
                         mOnClick = true;
                     }
-
                     // 왼쪽으로 이동
-                    for (int i = left - 1; i > 0; i--) {
+                    for (int i = left - 1; i >= 0; i--) {
+                        if (mResPosition[top][i] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, top, i);
+                        mOnClick = true;
+                    }
+                    // 오른쪽으로 이동
+                    for (int i = left + 1; i < mResPosition[top].length; i++) {
                         if (mResPosition[top][i] != 0) {
                             break;
                         }
@@ -123,12 +151,225 @@ public class GamePlayActivity extends AppCompatActivity {
                         mOnClick = true;
                     }
 
+                    return;
+                }
+            }
+        }
+    }
+
+    private void moveKnight(View view) {
+        for (int top = 0; top < mResPosition.length; top++) {
+            for (int left = 0; left < mResPosition[top].length; left++) {
+                if (mResPosition[top][left] == view.getId()) {
+                    // 위2 왼1
+                    if (top > 1 && left > 0 && mResPosition[top - 2][left - 1] == 0) {
+                        showX(view, top, left, top - 2, left - 1);
+                        mOnClick = true;
+                    }
+                    // 위2 오1
+                    if (top > 1 && left < mResPosition[top].length - 1 && mResPosition[top - 2][left + 1] == 0) {
+                        showX(view, top, left, top - 2, left + 1);
+                        mOnClick = true;
+                    }
+                    // 위1 왼2
+                    if (top > 0 && left > 1 && mResPosition[top - 1][left - 2] == 0) {
+                        showX(view, top, left, top - 1, left - 2);
+                        mOnClick = true;
+                    }
+                    // 위1 오2
+                    if (top > 0 && left < mResPosition[top].length - 2 && mResPosition[top - 1][left + 2] == 0) {
+                        showX(view, top, left, top - 1, left + 2);
+                        mOnClick = true;
+                    }
+                    // 아2 왼1
+                    if (top < mResPosition.length - 2 && left > 0 && mResPosition[top + 2][left - 1] == 0) {
+                        showX(view, top, left, top + 2, left - 1);
+                        mOnClick = true;
+                    }
+                    // 아2 오1
+                    if (top < mResPosition.length - 2 && left < mResPosition[top].length - 1 && mResPosition[top + 2][left + 1] == 0) {
+                        showX(view, top, left, top + 2, left + 1);
+                        mOnClick = true;
+                    }
+                    // 아1 왼2
+                    if (top < mResPosition.length - 1 && left > 1 && mResPosition[top + 1][left - 2] == 0) {
+                        showX(view, top, left, top + 1, left - 2);
+                        mOnClick = true;
+                    }
+                    // 아1 오2
+                    if (top < mResPosition.length - 1 && left < mResPosition[top].length - 2 && mResPosition[top + 1][left + 2] == 0) {
+                        showX(view, top, left, top + 1, left + 2);
+                        mOnClick = true;
+                    }
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private void moveBishop(View view) {
+        for (int top = 0; top < mResPosition.length; top++) {
+            for (int left = 0; left < mResPosition[top].length; left++) {
+                if (mResPosition[top][left] == view.getId()) {
+                    // 위 왼쪽
+                    for (int i = top - 1, j = left - 1; i >= 0 && j >= 0; i--, j--) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+                    // 위 오른쪽
+                    for (int i = top - 1, j = left + 1; i >= 0 && j < mResPosition[top].length; i--, j++) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+                    // 아래 왼쪽
+                    for (int i = top + 1, j = left - 1; i < mResPosition.length && j >= 0; i++, j--) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+                    // 아래 왼쪽
+                    for (int i = top + 1, j = left + 1; i < mResPosition.length && j < mResPosition[top].length; i++, j++) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private void moveQueen(View view) {
+        for (int top = 0; top < mResPosition.length; top++) {
+            for (int left = 0; left < mResPosition[top].length; left++) {
+                if (mResPosition[top][left] == view.getId()) {
+                    // 위로 이동
+                    for (int i = top - 1; i >= 0; i--) {
+                        if (mResPosition[i][left] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, left);
+                        mOnClick = true;
+                    }
+                    // 아래로 이동
+                    for (int i = top + 1; i < mResPosition.length; i++) {
+                        if (mResPosition[i][left] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, left);
+                        mOnClick = true;
+                    }
+                    // 왼쪽으로 이동
+                    for (int i = left - 1; i >= 0; i--) {
+                        if (mResPosition[top][i] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, top, i);
+                        mOnClick = true;
+                    }
                     // 오른쪽으로 이동
                     for (int i = left + 1; i < mResPosition[top].length; i++) {
                         if (mResPosition[top][i] != 0) {
                             break;
                         }
                         showX(view, top, left, top, i);
+                        mOnClick = true;
+                    }
+
+                    // 위 왼쪽
+                    for (int i = top - 1, j = left - 1; i >= 0 && j >= 0; i--, j--) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+                    // 위 오른쪽
+                    for (int i = top - 1, j = left + 1; i >= 0 && j < mResPosition[top].length; i--, j++) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+                    // 아래 왼쪽
+                    for (int i = top + 1, j = left - 1; i < mResPosition.length && j >= 0; i++, j--) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+                    // 아래 왼쪽
+                    for (int i = top + 1, j = left + 1; i < mResPosition.length && j < mResPosition[top].length; i++, j++) {
+                        if (mResPosition[i][j] != 0) {
+                            break;
+                        }
+                        showX(view, top, left, i, j);
+                        mOnClick = true;
+                    }
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private void moveKing(View view) {
+        for (int top = 0; top < mResPosition.length; top++) {
+            for (int left = 0; left < mResPosition[top].length; left++) {
+                if (mResPosition[top][left] == view.getId()) {
+                    // 위쪽
+                    if (top > 0 && mResPosition[top - 1][left] == 0) {
+                        showX(view, top, left, top - 1, left);
+                        mOnClick = true;
+                    }
+                    // 왼쪽
+                    if (left > 0 && mResPosition[top][left - 1] == 0) {
+                        showX(view, top, left, top, left - 1);
+                        mOnClick = true;
+                    }
+                    // 아래쪽
+                    if (top < mResPosition.length - 1 && mResPosition[top + 1][left] == 0) {
+                        showX(view, top, left, top + 1, left);
+                        mOnClick = true;
+                    }
+                    // 오른쪽
+                    if (left < mResPosition[top].length - 1 && mResPosition[top][left + 1] == 0) {
+                        showX(view, top, left, top, left + 1);
+                        mOnClick = true;
+                    }
+
+                    // 위 왼쪽
+                    if (top > 0 && left > 0 && mResPosition[top - 1][left - 1] == 0) {
+                        showX(view, top, left, top - 1, left - 1);
+                        mOnClick = true;
+                    }
+                    // 위 오른쪽
+                    if (top > 0 && left < mResPosition[top].length - 1 && mResPosition[top - 1][left + 1] == 0) {
+                        showX(view, top, left, top - 1, left + 1);
+                        mOnClick = true;
+                    }
+                    // 아래 왼쪽
+                    if (top < mResPosition.length - 1 && left > 0 && mResPosition[top + 1][left - 1] == 0) {
+                        showX(view, top, left, top + 1, left - 1);
+                        mOnClick = true;
+                    }
+                    // 아래 오른쪽
+                    if (top < mResPosition.length - 1 && left < mResPosition[top].length - 1 && mResPosition[top + 1][left + 1] == 0) {
+                        showX(view, top, left, top + 1, left + 1);
                         mOnClick = true;
                     }
 
@@ -162,7 +403,13 @@ public class GamePlayActivity extends AppCompatActivity {
                 layoutParams.topMargin = layoutParamsX.topMargin;
                 layoutParams.leftMargin = layoutParamsX.leftMargin;
                 view.setLayoutParams(layoutParams);
-                mRelativeLayout.removeView(v);
+
+                for (int i = 0; i < mListTextX.size(); i++) {
+                    TextView temp = mListTextX.get(i);
+                    mRelativeLayout.removeView(temp);
+                }
+                mListTextX.clear();
+
                 mResPosition[originalTop][originalLeft] = 0;
                 mResPosition[top][left] = view.getId();
 
@@ -170,5 +417,6 @@ public class GamePlayActivity extends AppCompatActivity {
             }
         });
         mRelativeLayout.addView(textView);
+        mListTextX.add(textView);
     }
 }

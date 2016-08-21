@@ -147,6 +147,17 @@
                 android:background="@drawable/back">
 
                 <ImageView
+                    android:id="@+id/imgBlackPawn1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="25dp"
+                    android:onClick="onClickMove"
+                    android:src="@drawable/blackpawn"
+                    android:tag="blackpawn" />
+
+
+                <ImageView
                     android:id="@+id/imgWhitePawn1"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
@@ -154,7 +165,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn2"
@@ -164,7 +175,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn3"
@@ -174,7 +185,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn4"
@@ -184,7 +195,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn5"
@@ -194,7 +205,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn6"
@@ -204,7 +215,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn7"
@@ -214,7 +225,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhitePawn8"
@@ -224,7 +235,7 @@
                     android:layout_marginTop="150dp"
                     android:onClick="onClickMove"
                     android:src="@drawable/pawn"
-                    android:tag="pawn" />
+                    android:tag="whitepawn" />
 
                 <ImageView
                     android:id="@+id/imgWhiteRook1"
