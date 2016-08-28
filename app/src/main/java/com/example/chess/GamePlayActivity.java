@@ -15,6 +15,7 @@ public class GamePlayActivity extends AppCompatActivity {
     RelativeLayout mRelativeLayout;
     int[][] mResPosition;
     boolean mOnClick = false;
+    boolean mWhite = false;
 
     ArrayList<TextView> mListTextX;
 
@@ -41,11 +42,8 @@ public class GamePlayActivity extends AppCompatActivity {
         }
 
         switch (tag) {
-            case "whitepawn":
-                movePawn(view, true);
-                break;
-            case "blackpawn":
-                movePawn(view, false);
+            case "pawn":
+                movePawn(view);
                 break;
             case "rook":
                 moveRook(view);
@@ -110,18 +108,20 @@ public class GamePlayActivity extends AppCompatActivity {
         mResPosition[7][7] = R.id.imgWhiteRook2;
     }
 
-    private void movePawn(View view, boolean white) {
+    private void movePawn(View view) {
+        boolean white = isWhite(view.getId());
+
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     if (white) {
                         if (top > 0 && mResPosition[top - 1][left] == 0) {
-                            showX(view, top, left, top - 1, left);
+                            showX(view, top, left, top - 1, left, mResPosition[top - 1][left]);
                             mOnClick = true;
                         }
                     } else {
                         if (top < mResPosition.length - 1 && mResPosition[top + 1][left] == 0) {
-                            showX(view, top, left, top + 1, left);
+                            showX(view, top, left, top + 1, left, mResPosition[top + 1][left]);
                             mOnClick = true;
                         }
                     }
@@ -132,39 +132,53 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void moveRook(View view) {
+        boolean white = isWhite(view.getId());
+
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     // 위로 이동
                     for (int i = top - 1; i >= 0; i--) {
                         if (mResPosition[i][left] != 0) {
+                            if (isWhite(mResPosition[i][left]) != white) {
+                                showX(view, top, left, i, left, mResPosition[i][left]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, left);
+                        showX(view, top, left, i, left, mResPosition[i][left]);
                         mOnClick = true;
                     }
                     // 아래로 이동
                     for (int i = top + 1; i < mResPosition.length; i++) {
                         if (mResPosition[i][left] != 0) {
+                            if (isWhite(mResPosition[i][left]) != white) {
+                                showX(view, top, left, i, left, mResPosition[i][left]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, left);
+                        showX(view, top, left, i, left, mResPosition[i][left]);
                         mOnClick = true;
                     }
                     // 왼쪽으로 이동
                     for (int i = left - 1; i >= 0; i--) {
                         if (mResPosition[top][i] != 0) {
+                            if (isWhite(mResPosition[top][i]) != white) {
+                                showX(view, top, left, top, i, mResPosition[top][i]);
+                            }
                             break;
                         }
-                        showX(view, top, left, top, i);
+                        showX(view, top, left, top, i, mResPosition[top][i]);
                         mOnClick = true;
                     }
                     // 오른쪽으로 이동
                     for (int i = left + 1; i < mResPosition[top].length; i++) {
                         if (mResPosition[top][i] != 0) {
+                            if (isWhite(mResPosition[top][i]) != white) {
+                                showX(view, top, left, top, i, mResPosition[top][i]);
+                            }
                             break;
                         }
-                        showX(view, top, left, top, i);
+                        showX(view, top, left, top, i, mResPosition[top][i]);
                         mOnClick = true;
                     }
 
@@ -175,48 +189,66 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void moveKnight(View view) {
+        boolean white = isWhite(view.getId());
+
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     // 위2 왼1
-                    if (top > 1 && left > 0 && mResPosition[top - 2][left - 1] == 0) {
-                        showX(view, top, left, top - 2, left - 1);
-                        mOnClick = true;
+                    if (top > 1 && left > 0) {
+                        if (mResPosition[top - 2][left - 1] == 0 || isWhite(mResPosition[top - 2][left - 1]) != white) {
+                            showX(view, top, left, top - 2, left - 1, mResPosition[top - 2][left - 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 위2 오1
-                    if (top > 1 && left < mResPosition[top].length - 1 && mResPosition[top - 2][left + 1] == 0) {
-                        showX(view, top, left, top - 2, left + 1);
-                        mOnClick = true;
+                    if (top > 1 && left < mResPosition[top].length - 1) {
+                        if (mResPosition[top - 2][left + 1] == 0 || isWhite(mResPosition[top - 2][left + 1]) != white) {
+                            showX(view, top, left, top - 2, left + 1, mResPosition[top - 2][left + 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 위1 왼2
-                    if (top > 0 && left > 1 && mResPosition[top - 1][left - 2] == 0) {
-                        showX(view, top, left, top - 1, left - 2);
-                        mOnClick = true;
+                    if (top > 0 && left > 1) {
+                        if (mResPosition[top - 1][left - 2] == 0 || isWhite(mResPosition[top - 1][left - 2]) != white) {
+                            showX(view, top, left, top - 1, left - 2, mResPosition[top - 1][left - 2]);
+                            mOnClick = true;
+                        }
                     }
                     // 위1 오2
-                    if (top > 0 && left < mResPosition[top].length - 2 && mResPosition[top - 1][left + 2] == 0) {
-                        showX(view, top, left, top - 1, left + 2);
-                        mOnClick = true;
+                    if (top > 0 && left < mResPosition[top].length - 2) {
+                        if (mResPosition[top - 1][left + 2] == 0 || isWhite(mResPosition[top - 1][left + 2]) != white) {
+                            showX(view, top, left, top - 1, left + 2, mResPosition[top - 1][left + 2]);
+                            mOnClick = true;
+                        }
                     }
                     // 아2 왼1
-                    if (top < mResPosition.length - 2 && left > 0 && mResPosition[top + 2][left - 1] == 0) {
-                        showX(view, top, left, top + 2, left - 1);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 2 && left > 0) {
+                        if (mResPosition[top + 2][left - 1] == 0 || isWhite(mResPosition[top + 2][left - 1]) != white) {
+                            showX(view, top, left, top + 2, left - 1, mResPosition[top + 2][left - 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 아2 오1
-                    if (top < mResPosition.length - 2 && left < mResPosition[top].length - 1 && mResPosition[top + 2][left + 1] == 0) {
-                        showX(view, top, left, top + 2, left + 1);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 2 && left < mResPosition[top].length - 1) {
+                        if (mResPosition[top + 2][left + 1] == 0 || isWhite(mResPosition[top + 2][left + 1]) != white) {
+                            showX(view, top, left, top + 2, left + 1, mResPosition[top + 2][left + 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 아1 왼2
-                    if (top < mResPosition.length - 1 && left > 1 && mResPosition[top + 1][left - 2] == 0) {
-                        showX(view, top, left, top + 1, left - 2);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 1 && left > 1) {
+                        if (mResPosition[top + 1][left - 2] == 0 || isWhite(mResPosition[top + 1][left - 2]) != white) {
+                            showX(view, top, left, top + 1, left - 2, mResPosition[top + 1][left - 2]);
+                            mOnClick = true;
+                        }
                     }
                     // 아1 오2
-                    if (top < mResPosition.length - 1 && left < mResPosition[top].length - 2 && mResPosition[top + 1][left + 2] == 0) {
-                        showX(view, top, left, top + 1, left + 2);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 1 && left < mResPosition[top].length - 2) {
+                        if (mResPosition[top + 1][left + 2] == 0 || isWhite(mResPosition[top + 1][left + 2]) != white) {
+                            showX(view, top, left, top + 1, left + 2, mResPosition[top + 1][left + 2]);
+                            mOnClick = true;
+                        }
                     }
 
                     return;
@@ -226,39 +258,53 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void moveBishop(View view) {
+        boolean white = isWhite(view.getId());
+
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     // 위 왼쪽
                     for (int i = top - 1, j = left - 1; i >= 0 && j >= 0; i--, j--) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
                     // 위 오른쪽
                     for (int i = top - 1, j = left + 1; i >= 0 && j < mResPosition[top].length; i--, j++) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
                     // 아래 왼쪽
                     for (int i = top + 1, j = left - 1; i < mResPosition.length && j >= 0; i++, j--) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
                     // 아래 왼쪽
                     for (int i = top + 1, j = left + 1; i < mResPosition.length && j < mResPosition[top].length; i++, j++) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
 
@@ -269,72 +315,98 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void moveQueen(View view) {
+        boolean white = isWhite(view.getId());
+
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     // 위로 이동
                     for (int i = top - 1; i >= 0; i--) {
                         if (mResPosition[i][left] != 0) {
+                            if (isWhite(mResPosition[i][left]) != white) {
+                                showX(view, top, left, i, left, mResPosition[i][left]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, left);
+                        showX(view, top, left, i, left, mResPosition[i][left]);
                         mOnClick = true;
                     }
                     // 아래로 이동
                     for (int i = top + 1; i < mResPosition.length; i++) {
                         if (mResPosition[i][left] != 0) {
+                            if (isWhite(mResPosition[i][left]) != white) {
+                                showX(view, top, left, i, left, mResPosition[i][left]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, left);
+                        showX(view, top, left, i, left, mResPosition[i][left]);
                         mOnClick = true;
                     }
                     // 왼쪽으로 이동
                     for (int i = left - 1; i >= 0; i--) {
                         if (mResPosition[top][i] != 0) {
+                            if (isWhite(mResPosition[top][i]) != white) {
+                                showX(view, top, left, top, i, mResPosition[top][i]);
+                            }
                             break;
                         }
-                        showX(view, top, left, top, i);
+                        showX(view, top, left, top, i, mResPosition[top][i]);
                         mOnClick = true;
                     }
                     // 오른쪽으로 이동
                     for (int i = left + 1; i < mResPosition[top].length; i++) {
                         if (mResPosition[top][i] != 0) {
+                            if (isWhite(mResPosition[top][i]) != white) {
+                                showX(view, top, left, top, i, mResPosition[top][i]);
+                            }
                             break;
                         }
-                        showX(view, top, left, top, i);
+                        showX(view, top, left, top, i, mResPosition[top][i]);
                         mOnClick = true;
                     }
 
                     // 위 왼쪽
                     for (int i = top - 1, j = left - 1; i >= 0 && j >= 0; i--, j--) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
                     // 위 오른쪽
                     for (int i = top - 1, j = left + 1; i >= 0 && j < mResPosition[top].length; i--, j++) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
                     // 아래 왼쪽
                     for (int i = top + 1, j = left - 1; i < mResPosition.length && j >= 0; i++, j--) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
                     // 아래 왼쪽
                     for (int i = top + 1, j = left + 1; i < mResPosition.length && j < mResPosition[top].length; i++, j++) {
                         if (mResPosition[i][j] != 0) {
+                            if (isWhite(mResPosition[i][j]) != white) {
+                                showX(view, top, left, i, j, mResPosition[i][j]);
+                            }
                             break;
                         }
-                        showX(view, top, left, i, j);
+                        showX(view, top, left, i, j, mResPosition[i][j]);
                         mOnClick = true;
                     }
 
@@ -345,49 +417,67 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     private void moveKing(View view) {
+        boolean white = isWhite(view.getId());
+
         for (int top = 0; top < mResPosition.length; top++) {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     // 위쪽
-                    if (top > 0 && mResPosition[top - 1][left] == 0) {
-                        showX(view, top, left, top - 1, left);
-                        mOnClick = true;
+                    if (top > 0) {
+                        if (mResPosition[top - 1][left] == 0 || isWhite(mResPosition[top - 1][left]) != white) {
+                            showX(view, top, left, top - 1, left, mResPosition[top - 1][left]);
+                            mOnClick = true;
+                        }
                     }
                     // 왼쪽
-                    if (left > 0 && mResPosition[top][left - 1] == 0) {
-                        showX(view, top, left, top, left - 1);
-                        mOnClick = true;
+                    if (left > 0) {
+                        if (mResPosition[top][left - 1] == 0 || isWhite(mResPosition[top][left - 1]) != white) {
+                            showX(view, top, left, top, left - 1, mResPosition[top][left - 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 아래쪽
-                    if (top < mResPosition.length - 1 && mResPosition[top + 1][left] == 0) {
-                        showX(view, top, left, top + 1, left);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 1) {
+                        if (mResPosition[top + 1][left] == 0 || isWhite(mResPosition[top + 1][left]) != white) {
+                            showX(view, top, left, top + 1, left, mResPosition[top + 1][left]);
+                            mOnClick = true;
+                        }
                     }
                     // 오른쪽
-                    if (left < mResPosition[top].length - 1 && mResPosition[top][left + 1] == 0) {
-                        showX(view, top, left, top, left + 1);
-                        mOnClick = true;
+                    if (left < mResPosition[top].length - 1) {
+                        if (mResPosition[top][left + 1] == 0 || isWhite(mResPosition[top][left + 1]) != white) {
+                            showX(view, top, left, top, left + 1, mResPosition[top][left + 1]);
+                            mOnClick = true;
+                        }
                     }
 
                     // 위 왼쪽
-                    if (top > 0 && left > 0 && mResPosition[top - 1][left - 1] == 0) {
-                        showX(view, top, left, top - 1, left - 1);
-                        mOnClick = true;
+                    if (top > 0 && left > 0) {
+                        if (mResPosition[top - 1][left - 1] == 0 || isWhite(mResPosition[top - 1][left - 1]) != white) {
+                            showX(view, top, left, top - 1, left - 1, mResPosition[top - 1][left - 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 위 오른쪽
-                    if (top > 0 && left < mResPosition[top].length - 1 && mResPosition[top - 1][left + 1] == 0) {
-                        showX(view, top, left, top - 1, left + 1);
-                        mOnClick = true;
+                    if (top > 0 && left < mResPosition[top].length - 1) {
+                        if (mResPosition[top - 1][left + 1] == 0 || isWhite(mResPosition[top - 1][left + 1]) != white) {
+                            showX(view, top, left, top - 1, left + 1, mResPosition[top - 1][left + 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 아래 왼쪽
-                    if (top < mResPosition.length - 1 && left > 0 && mResPosition[top + 1][left - 1] == 0) {
-                        showX(view, top, left, top + 1, left - 1);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 1 && left > 0) {
+                        if (mResPosition[top + 1][left - 1] == 0 || isWhite(mResPosition[top + 1][left - 1]) != white) {
+                            showX(view, top, left, top + 1, left - 1, mResPosition[top + 1][left - 1]);
+                            mOnClick = true;
+                        }
                     }
                     // 아래 오른쪽
-                    if (top < mResPosition.length - 1 && left < mResPosition[top].length - 1 && mResPosition[top + 1][left + 1] == 0) {
-                        showX(view, top, left, top + 1, left + 1);
-                        mOnClick = true;
+                    if (top < mResPosition.length - 1 && left < mResPosition[top].length - 1) {
+                        if (mResPosition[top + 1][left + 1] == 0 || isWhite(mResPosition[top + 1][left + 1]) != white) {
+                            showX(view, top, left, top + 1, left + 1, mResPosition[top + 1][left + 1]);
+                            mOnClick = true;
+                        }
                     }
 
                     return;
@@ -396,7 +486,8 @@ public class GamePlayActivity extends AppCompatActivity {
         }
     }
 
-    private void showX(final View view, final int originalTop, final int originalLeft, final int top, final int left) {
+
+    private void showX(final View view, final int originalTop, final int originalLeft, final int top, final int left, final int resId) {
         final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 
         TextView textView = new TextView(this);
@@ -430,10 +521,42 @@ public class GamePlayActivity extends AppCompatActivity {
                 mResPosition[originalTop][originalLeft] = 0;
                 mResPosition[top][left] = view.getId();
 
+                if (resId != 0) {
+                    View originalView = findViewById(resId);
+                    mRelativeLayout.removeView(originalView);
+                }
+
                 mOnClick = false;
             }
         });
         mRelativeLayout.addView(textView);
         mListTextX.add(textView);
+    }
+
+    private boolean isWhite(int resId) {
+
+        switch (resId) {
+            case R.id.imgWhitePawn1 :
+            case R.id.imgWhitePawn2 :
+            case R.id.imgWhitePawn3 :
+            case R.id.imgWhitePawn4 :
+            case R.id.imgWhitePawn5 :
+            case R.id.imgWhitePawn6 :
+            case R.id.imgWhitePawn7 :
+            case R.id.imgWhitePawn8 :
+
+            case R.id.imgWhiteRook1 :
+            case R.id.imgWhiteKnight1 :
+            case R.id.imgWhiteBishop1 :
+            case R.id.imgWhiteQueen :
+            case R.id.imgWhiteKing :
+            case R.id.imgWhiteBishop2 :
+            case R.id.imgWhiteKnight2 :
+            case R.id.imgWhiteRook2 :
+                return true;
+
+            default:
+                return false;
+        }
     }
 }
