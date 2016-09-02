@@ -1,7 +1,14 @@
 apply plugin: 'com.android.application'
 
 def getGitRevision() {
-    def revision = "git rev-list --count master".execute().text.trim().toInteger()
+    def revision = "git rev-list --count master".execute().text.trim()
+    if (revision == "") {
+        println "*** No git revision ***"
+        revision = 0;
+    } else {
+        revision = revision.toInteger()
+    }
+
     println "revision: " + revision
     return revision
 }
