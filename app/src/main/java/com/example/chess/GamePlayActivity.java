@@ -1,10 +1,12 @@
 package com.example.chess;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,9 +15,12 @@ import java.util.ArrayList;
 public class GamePlayActivity extends AppCompatActivity {
 
     RelativeLayout mRelativeLayout;
+    GridLayout mLayoutBlack;
+    GridLayout mLayoutWhite;
+
     int[][] mResPosition;
     boolean mOnClick = false;
-    boolean mWhite = false;
+    boolean mWhite = true;
 
     ArrayList<TextView> mListTextX;
 
@@ -25,6 +30,8 @@ public class GamePlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_play);
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.layout);
+        mLayoutBlack = (GridLayout) findViewById(R.id.layoutBlack);
+        mLayoutWhite = (GridLayout) findViewById(R.id.layoutWhite);
         initPosition();
 
         mListTextX = new ArrayList<>();
@@ -32,6 +39,26 @@ public class GamePlayActivity extends AppCompatActivity {
 
     public void onClickMove(View view) {
         String tag = (String) view.getTag();
+
+        if (mWhite != isWhite(view.getId())) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(GamePlayActivity.this);
+            builder.setTitle(R.string.dialog_title);
+
+            if (mWhite) {
+                // white 차례
+                builder.setMessage(R.string.dialog_message_white_turn);
+            } else {
+                // black 차례
+                builder.setMessage(R.string.dialog_message_black_turn);
+            }
+
+            builder.setCancelable(false);
+            builder.setPositiveButton(android.R.string.ok, null);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return;
+        }
 
         if (mOnClick) {
             for (int i = 0; i < mListTextX.size(); i++) {
@@ -524,9 +551,50 @@ public class GamePlayActivity extends AppCompatActivity {
                 if (resId != 0) {
                     View originalView = findViewById(resId);
                     mRelativeLayout.removeView(originalView);
+
+                    if (isWhite(resId)) {
+                        mLayoutBlack.addView(originalView);
+                    } else {
+                        mLayoutWhite.addView(originalView);
+                    }
+
+                    if (resId == R.id.imgWhiteKing) {
+                        // black win
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GamePlayActivity.this);
+                        builder.setTitle(R.string.dialog_title);
+                        builder.setMessage(R.string.dialog_message_black_win);
+                        builder.setCancelable(false);
+                        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 확인 눌렀을 때
+                                finish();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    } else if (resId == R.id.imgBlackKing) {
+                        // white win
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GamePlayActivity.this);
+                        builder.setTitle(R.string.dialog_title);
+                        builder.setMessage(R.string.dialog_message_white_win);
+                        builder.setCancelable(false);
+                        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 확인 눌렀을 때
+                                finish();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
 
                 mOnClick = false;
+                mWhite = !mWhite;
             }
         });
         mRelativeLayout.addView(textView);
@@ -536,23 +604,23 @@ public class GamePlayActivity extends AppCompatActivity {
     private boolean isWhite(int resId) {
 
         switch (resId) {
-            case R.id.imgWhitePawn1 :
-            case R.id.imgWhitePawn2 :
-            case R.id.imgWhitePawn3 :
-            case R.id.imgWhitePawn4 :
-            case R.id.imgWhitePawn5 :
-            case R.id.imgWhitePawn6 :
-            case R.id.imgWhitePawn7 :
-            case R.id.imgWhitePawn8 :
+            case R.id.imgWhitePawn1:
+            case R.id.imgWhitePawn2:
+            case R.id.imgWhitePawn3:
+            case R.id.imgWhitePawn4:
+            case R.id.imgWhitePawn5:
+            case R.id.imgWhitePawn6:
+            case R.id.imgWhitePawn7:
+            case R.id.imgWhitePawn8:
 
-            case R.id.imgWhiteRook1 :
-            case R.id.imgWhiteKnight1 :
-            case R.id.imgWhiteBishop1 :
-            case R.id.imgWhiteQueen :
-            case R.id.imgWhiteKing :
-            case R.id.imgWhiteBishop2 :
-            case R.id.imgWhiteKnight2 :
-            case R.id.imgWhiteRook2 :
+            case R.id.imgWhiteRook1:
+            case R.id.imgWhiteKnight1:
+            case R.id.imgWhiteBishop1:
+            case R.id.imgWhiteQueen:
+            case R.id.imgWhiteKing:
+            case R.id.imgWhiteBishop2:
+            case R.id.imgWhiteKnight2:
+            case R.id.imgWhiteRook2:
                 return true;
 
             default:

@@ -17,4 +17,9 @@
     <string name="content_move_knight">Knight moves in an "L" pattern (one square horizontally/vertically and a square diagonally). It is the only piece which can jump over another piece, it does not get blocked by other pieces.</string>
     <string name="content_move_pawn">Pawn in the first move can move one or two squares forward. If the pawn had a first movement, the pawn only can move one square forward. Pawns cannot move backwards. A pawn only able to capture the piece of the opponent in their diagonal direction at front but they cannot move if there is no piece or the piece is its own force.</string>
 
+    <string name="dialog_title">Notice</string>
+    <string name="dialog_message_white_turn">White trun</string>
+    <string name="dialog_message_black_turn">Black trun</string>
+    <string name="dialog_message_white_win">White win</string>
+    <string name="dialog_message_black_win">Black win</string>
 </resources>

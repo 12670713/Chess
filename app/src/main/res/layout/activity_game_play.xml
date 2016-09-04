@@ -15,6 +15,14 @@
         android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
+        <GridLayout
+            android:id="@+id/layoutBlack"
+            android:layout_width="match_parent"
+            android:columnCount="10"
+            android:layout_height="50dp">
+
+        </GridLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -590,8 +598,15 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
 
-
         </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/layoutWhite"
+            android:layout_width="match_parent"
+            android:columnCount="10"
+            android:layout_height="50dp">
+
+        </GridLayout>
 
     </LinearLayout>
 
