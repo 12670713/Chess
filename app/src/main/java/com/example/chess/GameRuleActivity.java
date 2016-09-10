@@ -17,4 +17,9 @@ public class GameRuleActivity extends AppCompatActivity {
         Intent intent = new Intent(GameRuleActivity.this, MoveRuleActivity.class);
         startActivity(intent);
     }
+
+    public void onClickMoveSpecial(View view) {
+        Intent intent = new Intent(GameRuleActivity.this, MoveSRuleActivity.class);
+        startActivity(intent);
+    }
 }

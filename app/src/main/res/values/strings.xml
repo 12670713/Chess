@@ -3,12 +3,21 @@
     <string name="title_game_rule">Rule</string>
     <string name="title_game_play">Play</string>
     <string name="title_move_rule">Basic moves of the pieces</string>
-    <string name="title_move_king">Basic moves of King</string>
+    <string name="title_move_special">Special moves of the pieces</string>
+    <string name="title_move_king">Moves of King</string>
     <string name="title_move_queen">Moves of the Queen</string>
     <string name="title_move_bishop">Moves of a Bishop</string>
     <string name="title_move_rook">Moves of a Rook</string>
     <string name="title_move_knight">Moves of a Knight</string>
     <string name="title_move_pawn">Moves of a Pawn</string>
+
+    <string name="title_move_castling">Castling (King and Rook)</string>
+    <string name="title_move_promotion">Promotion (Pawn)</string>
+    <string name="title_move_EnPassant">En Passant (Pawn)</string>
+
+    <string name="content_move_castling">Castling moves the king two squares towards a rook, the rook then need to placed on the other side of the king adjacent to it. Castling is available only when the king and rook for castling must not have moved previously, there must be no pieces between the king and the rook, king may not currently be in check nor may the king pass through or end up in a square that is under attack by the opposition piece (though the rook is permitted to be under attack and to pass over an attacked square) and the king and the rook must be in the same row.</string>
+    <string name="content_move_promotion">If a pawn reaches the furthest row in their position, the pawn is then converted to a queen, rook, bishop or knight of the same colour at the choice of the player (a queen is usually chosen). The choice is not limited to previously captured pieces. Hence it is theoretically possible for a player to have up to nine queens or up to ten rooks, bishops or knights if all of the pawns are promoted.</string>
+    <string name="content_move_EnPassant">When a pawn advances two squares from its original square and ends the turn adjacent to a pawn of the opponent on the same rank (row), it may be captured by that pawn of the opponent, as if it had moved only one square forward. This capture is only legal on the next move of the opponent immediately following the first advance of the pawn.</string>
 
     <string name="content_move_king">The king moves one square horizontally, vertically and diagonally. A special move of King with Rook is called castling - refer special moves.</string>
     <string name="content_move_queen">The queen moves any number of squares horizontally, vertically and diagonally. It might be the strongest pieces in chess.</string>
@@ -18,8 +27,8 @@
     <string name="content_move_pawn">Pawn in the first move can move one or two squares forward. If the pawn had a first movement, the pawn only can move one square forward. Pawns cannot move backwards. A pawn only able to capture the piece of the opponent in their diagonal direction at front but they cannot move if there is no piece or the piece is its own force.</string>
 
     <string name="dialog_title">Notice</string>
-    <string name="dialog_message_white_turn">White trun</string>
-    <string name="dialog_message_black_turn">Black trun</string>
-    <string name="dialog_message_white_win">White win</string>
-    <string name="dialog_message_black_win">Black win</string>
+    <string name="dialog_message_white_turn">White move</string>
+    <string name="dialog_message_black_turn">Black move</string>
+    <string name="dialog_message_white_win">White victory</string>
+    <string name="dialog_message_black_win">Black victory</string>
 </resources>
