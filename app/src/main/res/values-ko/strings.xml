@@ -4,6 +4,7 @@
     <string name="title_game_rule">게임 룰 설명</string>
     <string name="title_game_play">게임 하기</string>
     <string name="title_move_rule">기본 행마법</string>
+    <string name="title_move_special">특수 행마법</string>
     <string name="title_move_king">킹의 행마법</string>
     <string name="title_move_queen">퀸의 행마법</string>
     <string name="title_move_bishop">비숍의 행마법</string>
