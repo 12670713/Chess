@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ public class GamePlayActivity extends AppCompatActivity {
     boolean mOnClick = false;
     boolean mWhite = true;
 
+    String[] promotion;
+
     ArrayList<TextView> mListTextX;
 
     @Override
@@ -33,6 +37,12 @@ public class GamePlayActivity extends AppCompatActivity {
         mLayoutBlack = (GridLayout) findViewById(R.id.layoutBlack);
         mLayoutWhite = (GridLayout) findViewById(R.id.layoutWhite);
         initPosition();
+
+        promotion = new String[4];
+        promotion[0] = "Queen";
+        promotion[1] = "Knight";
+        promotion[2] = "Bishop";
+        promotion[3] = "Rook";
 
         mListTextX = new ArrayList<>();
     }
@@ -142,13 +152,37 @@ public class GamePlayActivity extends AppCompatActivity {
             for (int left = 0; left < mResPosition[top].length; left++) {
                 if (mResPosition[top][left] == view.getId()) {
                     if (white) {
+                        if (top == 6 && mResPosition[top - 2][left] == 0) {
+                            showX(view, top, left, top - 2, left, mResPosition[top - 2][left]);
+                            mOnClick = true;
+                        }
                         if (top > 0 && mResPosition[top - 1][left] == 0) {
                             showX(view, top, left, top - 1, left, mResPosition[top - 1][left]);
                             mOnClick = true;
                         }
+                        if (top > 0 && left > 0 && mResPosition[top - 1][left - 1] != 0 && !isWhite(mResPosition[top - 1][left - 1])) {
+                            showX(view, top, left, top - 1, left - 1, mResPosition[top - 1][left - 1]);
+                            mOnClick = true;
+                        }
+                        if (top > 0 && left < mResPosition[top].length - 1 && mResPosition[top - 1][left + 1] != 0 && !isWhite(mResPosition[top - 1][left + 1])) {
+                            showX(view, top, left, top - 1, left + 1, mResPosition[top - 1][left + 1]);
+                            mOnClick = true;
+                        }
                     } else {
+                        if (top == 1 && mResPosition[top + 2][left] == 0) {
+                            showX(view, top, left, top + 2, left, mResPosition[top + 2][left]);
+                            mOnClick = true;
+                        }
                         if (top < mResPosition.length - 1 && mResPosition[top + 1][left] == 0) {
                             showX(view, top, left, top + 1, left, mResPosition[top + 1][left]);
+                            mOnClick = true;
+                        }
+                        if (top < mResPosition.length - 1 && left > 0 && mResPosition[top + 1][left - 1] != 0 && isWhite(mResPosition[top + 1][left - 1])) {
+                            showX(view, top, left, top + 1, left - 1, mResPosition[top + 1][left - 1]);
+                            mOnClick = true;
+                        }
+                        if (top < mResPosition.length - 1 && left < mResPosition[top].length - 1 && mResPosition[top + 1][left + 1] != 0 && isWhite(mResPosition[top + 1][left + 1])) {
+                            showX(view, top, left, top + 1, left + 1, mResPosition[top + 1][left + 1]);
                             mOnClick = true;
                         }
                     }
@@ -591,6 +625,62 @@ public class GamePlayActivity extends AppCompatActivity {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
+                }
+
+                String tag = (String) view.getTag();
+                Log.d("GamePlayActivity", "tag: " + tag + " top:" + top + " left:" + left + " white:" + mWhite);
+                if (tag.equals("pawn") && ((mWhite && top == 0) || (!mWhite && top == mResPosition.length - 1))) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GamePlayActivity.this);
+                    builder.setTitle("promotion");
+                    builder.setCancelable(false);
+                    builder.setSingleChoiceItems(promotion, -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ImageView imageView = (ImageView) view;
+                            switch (i) {
+                                case 0:
+                                    if (mWhite) {
+                                        imageView.setImageResource(R.drawable.blackqueen);
+                                        imageView.setTag("queen");
+                                    } else {
+                                        imageView.setImageResource(R.drawable.queen);
+                                        imageView.setTag("queen");
+                                    }
+                                    break;
+                                case 1:
+                                    if (mWhite) {
+                                        imageView.setImageResource(R.drawable.blackknight);
+                                        imageView.setTag("knight");
+                                    } else {
+                                        imageView.setImageResource(R.drawable.knight);
+                                        imageView.setTag("knight");
+                                    }
+                                    break;
+                                case 2:
+                                    if (mWhite) {
+                                        imageView.setImageResource(R.drawable.blackbishop);
+                                        imageView.setTag("bishop");
+                                    } else {
+                                        imageView.setImageResource(R.drawable.bishop);
+                                        imageView.setTag("bishop");
+                                    }
+                                    break;
+                                case 3:
+                                    if (mWhite) {
+                                        imageView.setImageResource(R.drawable.blackrook);
+                                        imageView.setTag("rook");
+                                    } else {
+                                        imageView.setImageResource(R.drawable.rook);
+                                        imageView.setTag("rook");
+                                    }
+                                    break;
+                            }
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
 
                 mOnClick = false;
