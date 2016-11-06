@@ -22,6 +22,9 @@
             android:name=".MoveRuleActivity"
             android:label="@string/title_move_rule" />
         <activity
+            android:name=".MoveSRuleActivity"
+            android:label="@string/title_move_special" />
+        <activity
             android:name=".MoveKingActivity"
             android:label="@string/title_move_king" />
         <activity
@@ -39,7 +42,7 @@
         <activity
             android:name=".MovePawnActivity"
             android:label="@string/title_move_pawn" />
-        <activity android:name=".GamePlayActivity"></activity>
+        <activity android:name=".GamePlayActivity" />
     </application>
 
 </manifest>
