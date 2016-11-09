@@ -33,4 +33,11 @@
     <string name="dialog_message_black_turn">Black 차례입니다</string>
     <string name="dialog_message_white_win">White가 이겼습니다</string>
     <string name="dialog_message_black_win">Black이 이겼습니다</string>
+
+    <string name="Promotion">프로모션</string>
+    <string name="PQueen">퀸</string>
+    <string name="PBishop">비숍</string>
+    <string name="PKnight">나이트</string>
+    <string name="PRook">룩</string>
+
 </resources>

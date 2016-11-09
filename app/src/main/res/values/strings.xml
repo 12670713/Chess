@@ -31,4 +31,10 @@
     <string name="dialog_message_black_turn">Black move</string>
     <string name="dialog_message_white_win">White victory</string>
     <string name="dialog_message_black_win">Black victory</string>
+
+    <string name="Promotion">Promotion</string>
+    <string name="PQueen">Queen</string>
+    <string name="PBishop">Bishop</string>
+    <string name="PKnight">Knight</string>
+    <string name="PRook">Rook</string>
 </resources>
