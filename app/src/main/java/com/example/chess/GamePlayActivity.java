@@ -39,10 +39,10 @@ public class GamePlayActivity extends AppCompatActivity {
         initPosition();
 
         promotion = new String[4];
-        promotion[0] = "Queen";
-        promotion[1] = "Knight";
-        promotion[2] = "Bishop";
-        promotion[3] = "Rook";
+        promotion[0] = getString(R.string.PQueen);
+        promotion[1] = getString(R.string.PKnight);
+        promotion[2] = getString(R.string.PBishop);
+        promotion[3] = getString(R.string.PRook);
 
         mListTextX = new ArrayList<>();
     }
@@ -168,6 +168,33 @@ public class GamePlayActivity extends AppCompatActivity {
                             showX(view, top, left, top - 1, left + 1, mResPosition[top - 1][left + 1]);
                             mOnClick = true;
                         }
+
+                        if (top == 3) {
+                            if (left > 0) {
+                                if (mResPosition[top][left - 1] == R.id.imgBlackPawn1 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn2 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn3 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn4 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn5 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn6 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn7 ||
+                                        mResPosition[top][left - 1] == R.id.imgBlackPawn8) {
+                                    showX(view, top, left, top - 1, left - 1, mResPosition[top - 1][left - 1]);
+                                }
+                            }
+                            if (left < mResPosition[top].length - 1) {
+                                if (mResPosition[top][left + 1] == R.id.imgBlackPawn1 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn2 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn3 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn4 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn5 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn6 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn7 ||
+                                        mResPosition[top][left + 1] == R.id.imgBlackPawn8) {
+                                    showX(view, top, left, top - 1, left + 1, mResPosition[top - 1][left + 1]);
+                                }
+                            }
+                        }
                     } else {
                         if (top == 1 && mResPosition[top + 2][left] == 0) {
                             showX(view, top, left, top + 2, left, mResPosition[top + 2][left]);
@@ -184,6 +211,33 @@ public class GamePlayActivity extends AppCompatActivity {
                         if (top < mResPosition.length - 1 && left < mResPosition[top].length - 1 && mResPosition[top + 1][left + 1] != 0 && isWhite(mResPosition[top + 1][left + 1])) {
                             showX(view, top, left, top + 1, left + 1, mResPosition[top + 1][left + 1]);
                             mOnClick = true;
+                        }
+
+                        if (top == 4) {
+                            if (left > 0) {
+                                if (mResPosition[top][left - 1] == R.id.imgWhitePawn1 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn2 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn3 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn4 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn5 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn6 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn7 ||
+                                        mResPosition[top][left - 1] == R.id.imgWhitePawn8) {
+                                    showX(view, top, left, top + 1, left - 1, mResPosition[top + 1][left - 1]);
+                                }
+                            }
+                            if (left < mResPosition[top].length - 1) {
+                                if (mResPosition[top][left + 1] == R.id.imgWhitePawn1 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn2 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn3 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn4 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn5 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn6 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn7 ||
+                                        mResPosition[top][left + 1] == R.id.imgWhitePawn8) {
+                                    showX(view, top, left, top + 1, left + 1, mResPosition[top + 1][left + 1]);
+                                }
+                            }
                         }
                     }
                     return;
@@ -629,9 +683,11 @@ public class GamePlayActivity extends AppCompatActivity {
 
                 String tag = (String) view.getTag();
                 Log.d("GamePlayActivity", "tag: " + tag + " top:" + top + " left:" + left + " white:" + mWhite);
+
+                // 프로모션
                 if (tag.equals("pawn") && ((mWhite && top == 0) || (!mWhite && top == mResPosition.length - 1))) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GamePlayActivity.this);
-                    builder.setTitle("promotion");
+                    builder.setTitle(R.string.Promotion);
                     builder.setCancelable(false);
                     builder.setSingleChoiceItems(promotion, -1, new DialogInterface.OnClickListener() {
                         @Override
@@ -681,6 +737,37 @@ public class GamePlayActivity extends AppCompatActivity {
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                }
+
+                // 앙파상
+                if (tag.equals("pawn") && ((mWhite && top == 2) || (!mWhite && top == 5))) {
+                    if (mWhite) {
+                        if (mResPosition[3][left] != 0) {
+                            View originalView = findViewById(mResPosition[3][left]);
+                            if (originalView != null) {
+                                String originalTag = (String) originalView.getTag();
+                                if (originalTag.equals("pawn")) {
+                                    mRelativeLayout.removeView(originalView);
+
+                                    mLayoutWhite.addView(originalView);
+                                    mResPosition[3][left] = 0;
+                                }
+                            }
+                        }
+                    } else {
+                        if (mResPosition[4][left] != 0) {
+                            View originalView = findViewById(mResPosition[4][left]);
+                            if (originalView != null) {
+                                String originalTag = (String) originalView.getTag();
+                                if (originalTag.equals("pawn")) {
+                                    mRelativeLayout.removeView(originalView);
+
+                                    mLayoutBlack.addView(originalView);
+                                    mResPosition[4][left] = 0;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 mOnClick = false;
