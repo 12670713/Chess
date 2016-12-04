@@ -23,6 +23,10 @@ public class GamePlayActivity extends AppCompatActivity {
     int[][] mResPosition;
     boolean mOnClick = false;
     boolean mWhite = true;
+    boolean mWhiteKingCastling = true;
+    boolean mWhiteQueenCastling = true;
+    boolean mBlackKingCastling = true;
+    boolean mBlackQueenCastling = true;
 
     String[] promotion;
 
@@ -595,6 +599,20 @@ public class GamePlayActivity extends AppCompatActivity {
                         }
                     }
 
+                    if (white && mWhiteKingCastling && mResPosition[top][5] == 0 && mResPosition[top][6] == 0) {
+                        showX(view, top, left, top, left + 2, mResPosition[top][left + 2]);
+                        mOnClick = true;
+                    } else if (white && mWhiteQueenCastling && mResPosition[top][1] == 0 && mResPosition[top][2] == 0 && mResPosition[top][3] == 0) {
+                        showX(view, top, left, top, left - 2, mResPosition[top][left - 2]);
+                        mOnClick = true;
+                    } else if (!white && mBlackKingCastling && mResPosition[top][1] == 0 && mResPosition[top][2] == 0) {
+                        showX(view, top, left, top, left - 2, mResPosition[top][left - 2]);
+                        mOnClick = true;
+                    } else if (!white && mBlackQueenCastling && mResPosition[top][4] == 0 && mResPosition[top][5] == 0 && mResPosition[top][6] == 0) {
+                        showX(view, top, left, top, left + 2, mResPosition[top][left + 2]);
+                        mOnClick = true;
+                    }
+
                     return;
                 }
             }
@@ -678,6 +696,14 @@ public class GamePlayActivity extends AppCompatActivity {
 
                         AlertDialog dialog = builder.create();
                         dialog.show();
+                    } else if (resId == R.id.imgWhiteRook1) {
+                        mWhiteQueenCastling = false;
+                    } else if (resId == R.id.imgWhiteRook2) {
+                        mWhiteKingCastling = false;
+                    } else if (resId == R.id.imgBlackRook1) {
+                        mBlackKingCastling = false;
+                    } else if (resId == R.id.imgBlackRook2) {
+                        mBlackQueenCastling = false;
                     }
                 }
 
@@ -768,6 +794,57 @@ public class GamePlayActivity extends AppCompatActivity {
                             }
                         }
                     }
+                }
+
+                // 캐슬링
+                if (view.getId() == R.id.imgWhiteKing && mWhiteQueenCastling && left == 2) {
+                    View castlingView = findViewById(R.id.imgWhiteRook1);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) castlingView.getLayoutParams();
+                    layoutParams.leftMargin = 3 * 25 * (int) getResources().getDisplayMetrics().density;
+                    castlingView.setLayoutParams(layoutParams);
+
+                    mResPosition[top][0] = 0;
+                    mResPosition[top][3] = R.id.imgWhiteRook1;
+                } else if (view.getId() == R.id.imgWhiteKing && mWhiteKingCastling && left == 6) {
+                    View castlingView = findViewById(R.id.imgWhiteRook2);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) castlingView.getLayoutParams();
+                    layoutParams.leftMargin = 5 * 25 * (int) getResources().getDisplayMetrics().density;
+                    castlingView.setLayoutParams(layoutParams);
+
+                    mResPosition[top][7] = 0;
+                    mResPosition[top][5] = R.id.imgWhiteRook2;
+                } else if (view.getId() == R.id.imgBlackKing && mBlackKingCastling && left == 1) {
+                    View castlingView = findViewById(R.id.imgBlackRook1);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) castlingView.getLayoutParams();
+                    layoutParams.leftMargin = 2 * 25 * (int) getResources().getDisplayMetrics().density;
+                    castlingView.setLayoutParams(layoutParams);
+
+                    mResPosition[top][0] = 0;
+                    mResPosition[top][2] = R.id.imgBlackRook1;
+                } else if (view.getId() == R.id.imgBlackKing && mBlackQueenCastling && left == 5) {
+                    View castlingView = findViewById(R.id.imgBlackRook2);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) castlingView.getLayoutParams();
+                    layoutParams.leftMargin = 4 * 25 * (int) getResources().getDisplayMetrics().density;
+                    castlingView.setLayoutParams(layoutParams);
+
+                    mResPosition[top][7] = 0;
+                    mResPosition[top][2] = R.id.imgBlackRook2;
+                }
+
+                if (view.getId() == R.id.imgWhiteKing) {
+                    mWhiteKingCastling = false;
+                    mWhiteQueenCastling = false;
+                } else if (view.getId() == R.id.imgWhiteRook1) {
+                    mWhiteQueenCastling = false;
+                } else if (view.getId() == R.id.imgWhiteRook2) {
+                    mWhiteKingCastling = false;
+                } else if (view.getId() == R.id.imgBlackKing) {
+                    mBlackKingCastling = false;
+                    mBlackQueenCastling = false;
+                } else if (view.getId() == R.id.imgBlackRook1) {
+                    mBlackKingCastling = false;
+                } else if (view.getId() == R.id.imgBlackRook2) {
+                    mBlackQueenCastling = false;
                 }
 
                 mOnClick = false;
